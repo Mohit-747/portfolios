@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tyler The Designer - Graphic Design Portfolio</title>
+    <!-- Use Inter font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <!-- Load Tailwind CSS from CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Social Icons from Phosphor -->
+    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1/dist/phosphor-icons.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #fff;
+            background-color: #000;
+        }
+
+        /* Fixed background for the parallax effect */
+        .fixed-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            /* The custom background image from the user's YouTube channel */
+            background-image: url('https://yt3.googleusercontent.com/N8wUHRK3GU2MY-TTAqK9ArdsonVlgZeeel0AwIQ6INr4eZGqQohdKoFs855dRY6YZwuLzD4NDg=s900-c-k-c0x00ffffff-no-rj');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Crucial for parallax effect */
+            filter: grayscale(100%) brightness(0.6); /* Keeps the black-and-white theme and adds a darker overlay */
+            transition: filter 0.5s ease;
+        }
+        
+        /* The main content container that scrolls over the fixed background */
+        .scrolling-content {
+            position: relative;
+            z-index: 1;
+            /* Allows the fixed background to show through */
+            background-color: transparent;
+        }
+
+        /* Custom Styles for Dynamic Separators and Effects */
+        .section-separator {
+            position: relative;
+            height: 100px;
+            width: 100%;
+            overflow: hidden;
+            background-color: transparent;
+        }
+
+        /* The wave-like separators are now created with a darker, semi-transparent overlay to match the scroll effect */
+        /* The fill color is pure black to match the new theme */
+        .featured-work-separator {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23000' fill-opacity='0.9' d='M0,160L48,176C96,192,192,224,288,208C384,192,480,128,576,133.3C672,139,768,213,864,224C960,235,1056,181,1152,149.3C1248,117,1344,107,1392,101.3L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+        }
+
+        .associations-separator {
+             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23000' fill-opacity='0.9' d='M0,32L48,64C96,96,192,160,288,165.3C384,171,480,117,576,128C672,139,768,213,864,234.7C960,256,1056,224,1152,224C1248,224,1344,256,1392,272L1440,288L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z'%3E%3C/path%3E%3C/svg%3E");
+        }
+
+        .achievements-separator {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23000' fill-opacity='0.9' d='M0,224L48,213.3C96,203,192,181,288,149.3C384,117,480,75,576,101.3C672,128,768,224,864,261.3C960,299,1056,288,1152,261.3C1248,235,1344,192,1392,170.7L1440,149.3L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z'%3E%3C/path%3E%3C/svg%3E");
+        }
+
+        /* Hero Section Animation and Background Overlay */
+        .hero-overlay {
+            background-image: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.9));
+        }
+
+        /* Project Card Hover Effect */
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+
+        .project-card:hover img {
+            filter: grayscale(0) brightness(1);
+            transform: scale(1.05);
+        }
+
+        .project-overlay {
+            transition: opacity 0.3s ease;
+            opacity: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .project-card img {
+            transition: filter 0.3s ease, transform 0.3s ease;
+            filter: grayscale(1) brightness(0.6);
+        }
+
+        /* Achievements Background Spotlight */
+        .achievements-bg {
+            background-image: url('https://placehold.co/1920x1080/000000/cccccc?text=SPOTLIGHT+EFFECT');
+            background-position: center;
+            background-size: cover;
+            background-blend-mode: color-dodge; /* Creates a cool spotlight/glow effect */
+        }
+        
+        /* New CSS for scroll-based animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .animate-on-scroll.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* New styles for the stacked project layout */
+        .project-stack-card {
+            position: relative;
+            transform: scale(0.9);
+            opacity: 0.6;
+            filter: grayscale(1);
+            transition: transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-stack-card:hover {
+            opacity: 1;
+            filter: grayscale(0);
+        }
+
+        .project-stack-left {
+            transform-origin: left;
+        }
+
+        .project-stack-right {
+            transform-origin: right;
+        }
+
+        .central-project-card {
+            transform: scale(1);
+            opacity: 1;
+            filter: grayscale(0);
+        }
+        
+        /* Style for the YouTube/Spotify icons */
+        .redirect-icon-img {
+            width: 24px;
+            height: 24px;
+            filter: grayscale(100%);
+            transition: filter 0.2s ease;
+        }
+        .redirect-icon-img:hover {
+            filter: grayscale(0);
+        }
+
+        /* Red glow for images and cards */
+        .red-glow-card {
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+            border: 2px solid #ff0000;
+        }
+
+        /* Blood dripping animation for separators */
+        @keyframes bloodDrip {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .blood-drip {
+            position: relative;
+            overflow: hidden;
+            height: 100px;
+        }
+
+        .blood-drip-top {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23ff0000' d='M0,0 Q10,10,20,0 T40,0 T60,0 T80,0 T100,0 V100 H0 Z' /%3E%3C/svg%3E");
+            background-repeat: repeat-x;
+            background-size: 100px 100px;
+            opacity: 0;
+            animation: bloodDrip 1s ease-in-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-black text-white">
+
+    <!-- Fixed background with a stock image -->
+    <div class="fixed-bg"></div>
+
+    <!-- Main content container that scrolls over the background -->
+    <div class="scrolling-content">
+
+        <!-- Hero Section (Top Banner) -->
+        <section class="h-screen relative flex items-center justify-center p-8 text-center bg-cover bg-center">
+            <div class="hero-overlay absolute inset-0"></div>
+            <div class="z-10 flex flex-col items-center">
+                <!-- Placeholder for your logo -->
+                <img src="https://placehold.co/400x150/000000/ff0000?text=YOUR+LOGO+HERE" alt="Your Logo" class="mb-4">
+                <h2 class="font-extrabold text-2xl md:text-3xl lg:text-4xl mt-2 tracking-wide">GRAPHIC DESIGN PORTFOLIO</h2>
+                <p class="mt-4 text-gray-300 max-w-lg mx-auto text-sm md:text-base">A storyteller through visuals.</p>
+            </div>
+        </section>
+
+        <!-- Identity Section (Who Am I) - Added a data attribute for animation -->
+        <section class="py-24 px-8 md:px-16 lg:px-24 bg-black/90 animate-on-scroll" data-animate>
+            <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-16">
+                <!-- ID Card Photo -->
+                <div class="relative flex-shrink-0 w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-lg overflow-hidden bg-black/40 shadow-xl red-glow-card">
+                    <img src="https://storage.googleapis.com/gcn-image-assets/uploaded:screencapture-behance-net-gallery-201338243-Tyler-the-Creator-website-concept-landing-page-2025-08.jpg-3c8e30a0-49f6-441d-a2b1-f6e1747df67e" alt="My Name ID Photo" class="w-full h-full object-cover grayscale transition-transform duration-300 hover:scale-105">
+                    <div class="absolute top-4 right-4 bg-black p-2 rounded-full border border-gray-700 red-glow-card">
+                        <i class="ph ph-star-four-bold text-lg text-red-600"></i>
+                    </div>
+                </div>
+
+                <!-- Text Content -->
+                <div class="flex-grow">
+                    <h2 class="font-extrabold text-4xl md:text-5xl lg:text-6xl uppercase tracking-wide">WHO IS MY NAME?</h2>
+                    <p class="mt-8 text-gray-300 leading-relaxed text-sm md:text-base">
+                        [My Name] is a multidisciplinary graphic designer specializing in branding, digital art, and creative direction. With a unique balance between minimalism and bold visuals, [he/she/they] craft impactful stories through design. Passionate about blending culture, typography, and visual storytelling.
+                    </p>
+                    <!-- Quick Info Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-12 text-sm">
+                        <div>
+                            <p class="text-gray-400">✦ Years of Experience</p>
+                            <p class="text-white font-semibold text-lg mt-1">5+ years</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-400">✦ Specialization</p>
+                            <p class="text-white font-semibold text-lg mt-1">Branding, UI/UX, Posters</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-400">✦ Social Links</p>
+                            <div class="flex items-center space-x-4 mt-2">
+                                <a href="#" aria-label="Behance" class="text-red-600 hover:text-red-400 transition-colors">
+                                    <i class="ph-fill ph-behance-logo text-2xl"></i>
+                                </a>
+                                <a href="#" aria-label="Dribbble" class="text-red-600 hover:text-red-400 transition-colors">
+                                    <i class="ph-fill ph-dribbble-logo text-2xl"></i>
+                                </a>
+                                <a href="#" aria-label="Instagram" class="text-red-600 hover:text-red-400 transition-colors">
+                                    <i class="ph-fill ph-instagram-logo text-2xl"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Separator -->
+        <div class="section-separator featured-work-separator blood-drip"></div>
+
+        <!-- Popular Projects Section - New stacked structure -->
+        <section class="py-24 px-8 md:px-16 lg:px-24 bg-black/90 animate-on-scroll" data-animate>
+            <div class="max-w-7xl mx-auto">
+                <h2 class="font-black text-5xl md:text-6xl uppercase tracking-wide mb-12 text-center">POPULAR PROJECTS</h2>
+                <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+                    <!-- Left Stack -->
+                    <div id="left-stack" class="flex flex-col w-full md:w-1/4 space-y-4">
+                        <div class="project-stack-card project-stack-left rounded-lg overflow-hidden bg-black/40 red-glow-card"
+                            data-image="https://placehold.co/800x600/333333/cccccc?text=BRAND+IDENTITY"
+                            data-title="Project Title One"
+                            data-category="Brand Identity"
+                            data-youtube-url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                            data-spotify-url="https://open.spotify.com/artist/dummyartist"
+                            data-applemusic-url="https://music.apple.com/us/artist/dummyartist/id123456">
+                            <img src="https://placehold.co/800x600/333333/cccccc?text=BRAND+IDENTITY" class="w-full h-auto object-cover opacity-30">
+                        </div>
+                        <div class="project-stack-card project-stack-left rounded-lg overflow-hidden bg-black/40 red-glow-card"
+                            data-image="https://placehold.co/800x600/444444/cccccc?text=POSTER+DESIGN"
+                            data-title="Project Title Two"
+                            data-category="Poster Design"
+                            data-youtube-url=""
+                            data-spotify-url="https://open.spotify.com/album/42A384A9x92b9x92b"
+                            data-applemusic-url="">
+                            <img src="https://placehold.co/800x600/444444/cccccc?text=POSTER+DESIGN" class="w-full h-auto object-cover opacity-30">
+                        </div>
+                    </div>
+        
+                    <!-- Center Project Display (now a swappable card) -->
+                    <div id="central-project" class="project-stack-card central-project-card relative flex-grow w-full md:w-2/4 rounded-lg overflow-hidden shadow-xl red-glow-card"
+                        data-image="https://placehold.co/800x600/555555/cccccc?text=ALBUM+ART"
+                        data-title="Project Title Three"
+                        data-category="Album Art"
+                        data-youtube-url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                        data-spotify-url="https://open.spotify.com/album/42A384A9x92b9x92b"
+                        data-applemusic-url="https://music.apple.com/us/album/dummy-album/id123456">
+                        <img id="central-project-image" src="https://placehold.co/800x600/555555/cccccc?text=ALBUM+ART" alt="Central Project" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 flex flex-col justify-end p-6">
+                            <h3 class="font-bold text-2xl flex items-center">
+                                <span id="central-project-title">Project Title Three</span>
+                                <a id="youtube-link" href="#" target="_blank" class="redirect-icon hidden ml-2">
+                                    <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.1.1/assets/YoutubeLogo.svg" alt="YouTube" class="redirect-icon-img">
+                                </a>
+                                <a id="spotify-link" href="#" target="_blank" class="redirect-icon hidden ml-2">
+                                    <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.1.1/assets/SpotifyLogo.svg" alt="Spotify" class="redirect-icon-img">
+                                </a>
+                                <a id="applemusic-link" href="#" target="_blank" class="redirect-icon hidden ml-2">
+                                    <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.1.1/assets/MusicNotes.svg" alt="Apple Music" class="redirect-icon-img">
+                                </a>
+                            </h3>
+                            <p id="central-project-category" class="text-gray-300 text-base mt-1">Category: Album Art</p>
+                        </div>
+                    </div>
+        
+                    <!-- Right Stack -->
+                    <div id="right-stack" class="flex flex-col w-full md:w-1/4 space-y-4">
+                        <div class="project-stack-card project-stack-right rounded-lg overflow-hidden bg-black/40 red-glow-card"
+                            data-image="https://placehold.co/800x600/666666/cccccc?text=DIGITAL+CAMPAIGN"
+                            data-title="Project Title Four"
+                            data-category="Digital Campaign"
+                            data-youtube-url="https://www.youtube.com/user/DigitalCampaignsChannel"
+                            data-spotify-url=""
+                            data-applemusic-url="https://music.apple.com/us/album/dummy-album/id123456">
+                            <img src="https://placehold.co/800x600/666666/cccccc?text=DIGITAL+CAMPAIGN" class="w-full h-auto object-cover opacity-30">
+                        </div>
+                        <div class="project-stack-card project-stack-right rounded-lg overflow-hidden bg-black/40 red-glow-card"
+                            data-image="https://placehold.co/800x600/777777/cccccc?text=UI%2FUX+DESIGN"
+                            data-title="Project Title Five"
+                            data-category="UI/UX Design"
+                            data-youtube-url=""
+                            data-spotify-url="https://open.spotify.com/album/42A384A9x92b9x92b"
+                            data-applemusic-url="">
+                            <img src="https://placehold.co/800x600/777777/cccccc?text=UI%2FUX+DESIGN" class="w-full h-auto object-cover opacity-30">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Separator -->
+        <div class="section-separator associations-separator blood-drip"></div>
+
+        <!-- Associations / Collaborations - Added a data attribute for animation -->
+        <section id="stats-section" class="py-24 px-8 md:px-16 lg:px-24 bg-black/90 animate-on-scroll" data-animate>
+            <div class="max-w-7xl mx-auto">
+                <h2 class="font-black text-5xl md:text-6xl uppercase tracking-wide mb-12">ASSOCIATIONS & COLLABORATIONS</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+                    <!-- Logos Section -->
+                    <div class="flex flex-col items-center justify-center space-y-8">
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-8">
+                            <img src="https://placehold.co/200x100/111111/999999?text=BRAND+LOGO+1" alt="Brand Logo 1" class="w-full h-auto object-contain p-4 rounded-lg bg-black/40 transition-transform duration-300 hover:scale-110 red-glow-card">
+                            <img src="https://placehold.co/200x100/111111/999999?text=BRAND+LOGO+2" alt="Brand Logo 2" class="w-full h-auto object-contain p-4 rounded-lg bg-black/40 transition-transform duration-300 hover:scale-110 red-glow-card">
+                            <img src="https://placehold.co/200x100/111111/999999?text=BRAND+LOGO+3" alt="Brand Logo 3" class="w-full h-auto object-contain p-4 rounded-lg bg-black/40 transition-transform duration-300 hover:scale-110 red-glow-card">
+                            <img src="https://placehold.co/200x100/111111/999999?text=BRAND+LOGO+4" alt="Brand Logo 4" class="w-full h-auto object-contain p-4 rounded-lg bg-black/40 transition-transform duration-300 hover:scale-110 red-glow-card">
+                            <img src="https://placehold.co/200x100/111111/999999?text=BRAND+LOGO+5" alt="Brand Logo 5" class="w-full h-auto object-contain p-4 rounded-lg bg-black/40 transition-transform duration-300 hover:scale-110 red-glow-card">
+                            <img src="https://placehold.co/200x100/111111/999999?text=BRAND+LOGO+6" alt="Brand Logo 6" class="w-full h-auto object-contain p-4 rounded-lg bg-black/40 transition-transform duration-300 hover:scale-110 red-glow-card">
+                        </div>
+                        <div class="text-center mt-8">
+                            <p class="text-white font-bold text-3xl md:text-4xl lg:text-5xl">100+ Happy Clients</p>
+                        </div>
+                    </div>
+
+                    <!-- Highlight Project -->
+                    <div class="relative w-full h-96 rounded-lg overflow-hidden shadow-xl red-glow-card">
+                        <img src="https://placehold.co/800x600/222222/bbbbbb?text=TEAM+PROJECT+PHOTO" alt="Team Project" class="w-full h-full object-cover grayscale transition-transform duration-300 hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-6 left-6 right-6">
+                            <h3 class="font-bold text-xl md:text-2xl lg:text-3xl text-white">Project Title</h3>
+                            <p class="text-gray-300 text-sm md:text-base mt-1">A brief description of the project.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Stats with dynamic numbers -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16 text-center">
+                    <div class="bg-black/40 p-6 rounded-lg shadow-md red-glow-card">
+                        <p class="text-red-600 text-sm uppercase">YouTube Subscribers</p>
+                        <p id="youtube-stats" class="text-white font-black text-4xl mt-2" data-target="16000">0</p>
+                    </div>
+                    <div class="bg-black/40 p-6 rounded-lg shadow-md red-glow-card">
+                        <p class="text-red-600 text-sm uppercase">Spotify Listeners</p>
+                        <p id="spotify-stats" class="text-white font-black text-4xl mt-2" data-target="100000">0</p>
+                    </div>
+                    <div class="bg-black/40 p-6 rounded-lg shadow-md red-glow-card">
+                        <p id="projects-stats" class="text-red-600 text-sm uppercase">Total Projects</p>
+                        <p class="text-white font-black text-4xl mt-2" data-target="50">0</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Separator -->
+        <div class="section-separator associations-separator"></div>
+
+        <!-- Achievements Section - Added a data attribute for animation -->
+        <section class="achievements-bg bg-black bg-opacity-90 py-24 px-8 md:px-16 lg:px-24 relative animate-on-scroll" data-animate>
+            <div class="absolute inset-0 bg-black opacity-80"></div>
+            <div class="max-w-7xl mx-auto relative z-10 text-center">
+                <h2 class="font-black text-5xl md:text-6xl uppercase tracking-wide mb-12">ACHIEVEMENTS</h2>
+                <ul class="text-lg md:text-xl lg:text-2xl space-y-4 max-w-2xl mx-auto">
+                    <li class="flex items-center justify-center red-glow-card p-4 rounded-lg">
+                        <i class="ph ph-star-four-bold text-red-600 mr-4"></i>
+                        <span class="text-gray-300 font-medium">Winner – [Design Competition Name]</span>
+                    </li>
+                    <li class="flex items-center justify-center red-glow-card p-4 rounded-lg">
+                        <i class="ph ph-star-four-bold text-red-600 mr-4"></i>
+                        <span class="text-gray-300 font-medium">Featured on MTV Hustle Season 4</span>
+                    </li>
+                    <li class="flex items-center justify-center red-glow-card p-4 rounded-lg">
+                        <i class="ph ph-star-four-bold text-red-600 mr-4"></i>
+                        <span class="text-gray-300 font-medium">Top 30 – OHO SCENE CHANGE</span>
+                    </li>
+                    <li class="flex items-center justify-center red-glow-card p-4 rounded-lg">
+                        <i class="ph ph-star-four-bold text-red-600 mr-4"></i>
+                        <span class="text-gray-300 font-medium">Exhibited at [Event/Showcase]</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Call to Action (Footer) -->
+        <footer class="bg-black py-24 px-8 md:px-16 lg:px-24 text-center">
+            <h2 class="font-black text-5xl md:text-6xl lg:text-7xl tracking-tight leading-tight max-w-3xl mx-auto">
+                A GREAT COLLABORATION IS JUST ONE CALL AWAY
+            </h2>
+            <a href="mailto:dotmoriginal@email.com" class="block text-gray-300 font-bold text-lg md:text-xl mt-8 hover:text-white transition-colors">
+                Contact Email: dotmoriginal@email.com
+            </a>
+            <div class="flex justify-center items-center space-x-6 mt-8">
+                <a href="#" aria-label="Behance" class="text-red-600 hover:text-red-400 transition-colors">
+                    <i class="ph-fill ph-behance-logo text-3xl"></i>
+                </a>
+                <a href="#" aria-label="Dribbble" class="text-red-600 hover:text-red-400 transition-colors">
+                    <i class="ph-fill ph-dribbble-logo text-3xl"></i>
+                </a>
+                <a href="#" aria-label="Instagram" class="text-red-600 hover:text-red-400 transition-colors">
+                    <i class="ph-fill ph-instagram-logo text-3xl"></i>
+                </a>
+                <a href="#" aria-label="YouTube" class="text-red-600 hover:text-red-400 transition-colors">
+                    <i class="ph-fill ph-youtube-logo text-3xl"></i>
+                </a>
+            </div>
+            <p class="text-gray-600 text-sm mt-8">© 2023 My Name. All Rights Reserved.</p>
+        </footer>
+    </div> <!-- End of .scrolling-content -->
+
+    <script>
+        // JavaScript for the dynamic number counting animation
+        let hasCounted = false;
+
+        /**
+         * Animates a number from a start value to a target value.
+         * @param {HTMLElement} element The HTML element to update.
+         * @param {number} target The final number value.
+         * @param {number} duration The duration of the animation in milliseconds.
+         */
+        function animateCount(element, target, duration) {
+            let start = 0;
+            const startTime = Date.now();
+
+            const updateCount = () => {
+                const now = Date.now();
+                const elapsed = now - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const current = Math.floor(progress * target);
+                
+                // Add a '+' sign for numbers over 1000
+                if (target >= 1000) {
+                    element.textContent = (current / 1000).toFixed(current < target ? 1 : 0) + 'K+';
+                } else {
+                    element.textContent = current + '+';
+                }
+
+                if (progress < 1) {
+                    requestAnimationFrame(updateCount);
+                }
+            };
+
+            requestAnimationFrame(updateCount);
+        }
+
+        // Use an IntersectionObserver to trigger the animation when the stats section is visible
+        const statsObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !hasCounted) {
+                    const youtubeStats = document.getElementById('youtube-stats');
+                    const spotifyStats = document.getElementById('spotify-stats');
+                    const projectsStats = document.getElementById('projects-stats');
+                    
+                    if (youtubeStats) animateCount(youtubeStats, parseInt(youtubeStats.dataset.target), 2000);
+                    if (spotifyStats) animateCount(spotifyStats, parseInt(spotifyStats.dataset.target), 2000);
+                    if (projectsStats) animateCount(projectsStats, parseInt(projectsStats.dataset.target), 2000);
+
+                    hasCounted = true;
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 }); // Trigger when 50% of the section is visible
+
+        // Start observing the stats section
+        const statsSection = document.getElementById('stats-section');
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+
+        // IntersectionObserver for general section animations (fade-in, slide-up)
+        const sectionObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 }); // Trigger when 20% of the section is visible
+
+        // Observe all sections with the `data-animate` attribute
+        document.querySelectorAll('section[data-animate]').forEach(section => {
+            sectionObserver.observe(section);
+        });
+
+        // New JavaScript for the popular projects click functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const centralCard = document.getElementById('central-project');
+            const centralImage = document.getElementById('central-project-image');
+            const centralTitle = document.getElementById('central-project-title');
+            const centralCategory = document.getElementById('central-project-category');
+            const youtubeLink = document.getElementById('youtube-link');
+            const spotifyLink = document.getElementById('spotify-link');
+            const applemusicLink = document.getElementById('applemusic-link');
+
+            // Get all projects in the left and right stacks
+            const stackProjects = document.querySelectorAll('.project-stack-card:not(.central-project-card)');
+
+            // Initial state update for the central card
+            function updateCentralCard(cardData) {
+                centralImage.src = cardData.image;
+                centralTitle.textContent = cardData.title;
+                centralCategory.textContent = `Category: ${cardData.category}`;
+                
+                // Update and show/hide the YouTube icon
+                if (cardData.youtubeUrl) {
+                    youtubeLink.href = cardData.youtubeUrl;
+                    youtubeLink.classList.remove('hidden');
+                } else {
+                    youtubeLink.classList.add('hidden');
+                }
+
+                // Update and show/hide the Spotify icon
+                if (cardData.spotifyUrl) {
+                    spotifyLink.href = cardData.spotifyUrl;
+                    spotifyLink.classList.remove('hidden');
+                } else {
+                    spotifyLink.classList.add('hidden');
+                }
+
+                // Update and show/hide the Apple Music icon
+                if (cardData.applemusicUrl) {
+                    applemusicLink.href = cardData.applemusicUrl;
+                    applemusicLink.classList.remove('hidden');
+                } else {
+                    applemusicLink.classList.add('hidden');
+                }
+            }
+
+            stackProjects.forEach(card => {
+                card.addEventListener('click', () => {
+                    // Check if the clicked card is already the central card
+                    if (card.dataset.image === centralCard.dataset.image) {
+                        return; // Do nothing if it's already in the center
+                    }
+
+                    // 1. Capture the data of the clicked card
+                    const clickedData = {
+                        image: card.dataset.image,
+                        title: card.dataset.title,
+                        category: card.dataset.category,
+                        youtubeUrl: card.dataset.youtubeUrl,
+                        spotifyUrl: card.dataset.spotifyUrl,
+                        applemusicUrl: card.dataset.applemusicUrl
+                    };
+
+                    // 2. Capture the data of the current central card
+                    const centralData = {
+                        image: centralCard.dataset.image,
+                        title: centralCard.dataset.title,
+                        category: centralCard.dataset.category,
+                        youtubeUrl: centralCard.dataset.youtubeUrl,
+                        spotifyUrl: centralCard.dataset.spotifyUrl,
+                        applemusicUrl: centralCard.dataset.applemusicUrl
+                    };
+
+                    // 3. Update the central card with the clicked card's data
+                    centralCard.dataset.image = clickedData.image;
+                    centralCard.dataset.title = clickedData.title;
+                    centralCard.dataset.category = clickedData.category;
+                    centralCard.dataset.youtubeUrl = clickedData.youtubeUrl;
+                    centralCard.dataset.spotifyUrl = clickedData.spotifyUrl;
+                    centralCard.dataset.applemusicUrl = clickedData.applemusicUrl;
+
+                    updateCentralCard(clickedData);
+
+                    // 4. Update the clicked card with the old central card's data
+                    card.dataset.image = centralData.image;
+                    card.dataset.title = centralData.title;
+                    card.dataset.category = centralData.category;
+                    card.dataset.youtubeUrl = centralData.youtubeUrl;
+                    card.dataset.spotifyUrl = centralData.spotifyUrl;
+                    card.dataset.applemusicUrl = centralData.applemusicUrl;
+
+                    // Update the image src on the clicked card as well
+                    const clickedImage = card.querySelector('img');
+                    if (clickedImage) {
+                        clickedImage.src = centralData.image;
+                    }
+                });
+            });
+            
+            // Set initial state of the central card
+            const initialCentralData = {
+                image: centralCard.dataset.image,
+                title: centralCard.dataset.title,
+                category: centralCard.dataset.category,
+                youtubeUrl: centralCard.dataset.youtubeUrl,
+                spotifyUrl: centralCard.dataset.spotifyUrl,
+                applemusicUrl: centralCard.dataset.applemusicUrl
+            };
+            updateCentralCard(initialCentralData);
+        });
+    </script>
+</body>
+</html>
