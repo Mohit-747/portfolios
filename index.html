@@ -31,8 +31,7 @@
             background-image: url('https://yt3.googleusercontent.com/N8wUHRK3GU2MY-TTAqK9ArdsonVlgZeeel0AwIQ6INr4eZGqQohdKoFs855dRY6YZwuLzD4NDg=s900-c-k-c0x00ffffff-no-rj');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed; /* Crucial for parallax effect */
-            filter: grayscale(100%) brightness(0.6); /* Keeps the black-and-white theme and adds a darker overlay */
+            background-attachment: fixed; /* Crucial for parallax effect, although often ignored on mobile */
             transition: filter 0.5s ease;
         }
         
@@ -40,8 +39,13 @@
         .scrolling-content {
             position: relative;
             z-index: 1;
-            /* Allows the fixed background to show through */
-            background-color: transparent;
+            /* Using a semi-transparent background to let the fixed image show through */
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        
+        /* The hero section's content is now on top of the fixed background with a consistent dark overlay */
+        .hero-section-overlay {
+            background-color: rgba(0, 0, 0, 0.7);
         }
 
         /* Custom Styles for Dynamic Separators and Effects */
@@ -50,11 +54,8 @@
             height: 100px;
             width: 100%;
             overflow: hidden;
-            background-color: transparent;
         }
 
-        /* The wave-like separators are now created with a darker, semi-transparent overlay to match the scroll effect */
-        /* The fill color is pure black to match the new theme */
         .featured-work-separator {
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23000' fill-opacity='0.9' d='M0,160L48,176C96,192,192,224,288,208C384,192,480,128,576,133.3C672,139,768,213,864,224C960,235,1056,181,1152,149.3C1248,117,1344,107,1392,101.3L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
         }
@@ -196,7 +197,7 @@
 
         <!-- Hero Section (Top Banner) -->
         <section class="h-screen relative flex items-center justify-center p-8 text-center bg-cover bg-center">
-            <div class="hero-overlay absolute inset-0"></div>
+            <div class="hero-section-overlay absolute inset-0"></div>
             <div class="z-10 flex flex-col items-center">
                 <!-- Placeholder for your logo -->
                 <img src="https://placehold.co/400x150/000000/ff0000?text=YOUR+LOGO+HERE" alt="Your Logo" class="mb-4">
@@ -333,9 +334,9 @@
         </section>
 
         <!-- Dynamic Separator -->
-        <div class="section-separator associations-separator blood-drip"></div>
+        <div class="section-separator associations-separator"></div>
 
-        <!-- Associations / Collaborations - Added a data attribute for animation -->
+        <!-- Achievements Section - Added a data attribute for animation -->
         <section id="stats-section" class="py-24 px-8 md:px-16 lg:px-24 bg-black/90 animate-on-scroll" data-animate>
             <div class="max-w-7xl mx-auto">
                 <h2 class="font-black text-5xl md:text-6xl uppercase tracking-wide mb-12">ASSOCIATIONS & COLLABORATIONS</h2>
@@ -388,7 +389,7 @@
         <div class="section-separator associations-separator"></div>
 
         <!-- Achievements Section - Added a data attribute for animation -->
-        <section class="achievements-bg bg-black bg-opacity-90 py-24 px-8 md:px-16 lg:px-24 relative animate-on-scroll" data-animate>
+        <section class="py-24 px-8 md:px-16 lg:px-24 bg-black/90 animate-on-scroll" data-animate>
             <div class="absolute inset-0 bg-black opacity-80"></div>
             <div class="max-w-7xl mx-auto relative z-10 text-center">
                 <h2 class="font-black text-5xl md:text-6xl uppercase tracking-wide mb-12">ACHIEVEMENTS</h2>
@@ -490,7 +491,7 @@
                     observer.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.5 }); // Trigger when 50% of the section is visible
+        }, { threshold: 0.2 }); // Trigger when 20% of the section is visible
 
         // Start observing the stats section
         const statsSection = document.getElementById('stats-section');
