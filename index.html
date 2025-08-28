@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DOTM - Devil On The Mic</title>
+    <title>Tyler The Designer - Graphic Design Portfolio</title>
     <!-- Use Inter font from Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -199,8 +199,8 @@
         <section class="h-screen relative flex items-center justify-center p-8 text-center bg-cover bg-center">
             <div class="hero-section-overlay absolute inset-0"></div>
             <div class="z-10 flex flex-col items-center">
-                <!-- Placeholder for your logo -->
-                <img src="Dotmimages/1000070639.png" alt="Your Logo" class="mb-4">
+                <!-- Placeholder for your logo, with a max-width for better responsiveness -->
+                <img src="Dotmimages/1000070639.png" alt="Your Logo" class="mb-4 w-full max-w-sm h-auto red-glow-card">
                 <h2 class="font-extrabold text-2xl md:text-3xl lg:text-4xl mt-2 tracking-wide">GRAPHIC DESIGN PORTFOLIO</h2>
                 <p class="mt-4 text-gray-300 max-w-lg mx-auto text-sm md:text-base">A storyteller through visuals.</p>
             </div>
@@ -219,7 +219,7 @@
 
                 <!-- Text Content -->
                 <div class="flex-grow">
-                    <h2 class="font-extrabold text-4xl md:text-5xl lg:text-6xl uppercase tracking-wide">WHO IS MY NAME?</h2>
+                    <h2 class="font-extrabold text-4xl md:text-5xl lg:text-6xl uppercase tracking-wide">WHO IS MY DOTM?</h2>
                     <p class="mt-8 text-gray-300 leading-relaxed text-sm md:text-base">
                         [My Name] is a multidisciplinary graphic designer specializing in branding, digital art, and creative direction. With a unique balance between minimalism and bold visuals, [he/she/they] craft impactful stories through design. Passionate about blending culture, typography, and visual storytelling.
                     </p>
@@ -378,8 +378,8 @@
                         <p id="spotify-stats" class="text-white font-black text-4xl mt-2" data-target="100000">0</p>
                     </div>
                     <div class="bg-black/40 p-6 rounded-lg shadow-md red-glow-card">
-                        <p id="projects-stats" class="text-red-600 text-sm uppercase">Total Projects</p>
-                        <p class="text-white font-black text-4xl mt-2" data-target="50">0</p>
+                        <p class="text-red-600 text-sm uppercase">Insta Family</p>
+                        <p id="insta-stats" class="text-white font-black text-4xl mt-2" data-target="16000">0</p>
                     </div>
                 </div>
             </div>
@@ -481,11 +481,11 @@
                 if (entry.isIntersecting && !hasCounted) {
                     const youtubeStats = document.getElementById('youtube-stats');
                     const spotifyStats = document.getElementById('spotify-stats');
-                    const projectsStats = document.getElementById('projects-stats');
+                    const instaStats = document.getElementById('insta-stats');
                     
                     if (youtubeStats) animateCount(youtubeStats, parseInt(youtubeStats.dataset.target), 2000);
                     if (spotifyStats) animateCount(spotifyStats, parseInt(spotifyStats.dataset.target), 2000);
-                    if (projectsStats) animateCount(projectsStats, parseInt(projectsStats.dataset.target), 2000);
+                    if (instaStats) animateCount(instaStats, parseInt(instaStats.dataset.target), 2000);
 
                     hasCounted = true;
                     observer.unobserve(entry.target);
